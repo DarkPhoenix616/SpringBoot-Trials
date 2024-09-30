@@ -1,0 +1,52 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.4'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.codaholic'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)  // Ensure Java 17 is used
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor  // For Lombok annotation processing
+	}
+}
+
+repositories {
+	mavenCentral()  // Maven Central for dependencies
+}
+
+dependencies {
+	// Spring Boot Dependencies
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // For JPA support
+	implementation 'org.springframework.boot:spring-boot-starter-web'  // For building web apps
+
+	// Lombok dependencies
+	compileOnly 'org.projectlombok:lombok'  // Lombok for reducing boilerplate code
+	annotationProcessor 'org.projectlombok:lombok'  // Annotation processor for Lombok
+
+	// Development Tools
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'  // Dev tools for live reload
+
+	// Database
+	runtimeOnly 'com.h2database:h2'  // H2 in-memory database
+
+	// Jakarta Validation API and Hibernate Validator
+	implementation 'jakarta.validation:jakarta.validation-api:3.0.0'  // Jakarta validation
+	implementation 'org.hibernate.validator:hibernate-validator:7.0.0.Final'  // Hibernate validator for Jakarta validation implementation
+
+	// Spring Boot Test Dependencies
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'  // Testing with Spring Boot
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'  // JUnit Platform Launcher for tests
+}
+
+tasks.named('test') {
+	useJUnitPlatform()  // Use JUnit Platform for testing
+}
